@@ -19,7 +19,9 @@ class CalendarLocators(object):
     ARROW_CALENDAR = (By.CSS_SELECTOR, '.month2 .next')
     CALENDAR_BOX = (By.CLASS_NAME, 'date-picker-wrapper')
     MONTH = (By.CLASS_NAME, 'month1')
-    DAY_LOCATION = (By.XPATH, '//span[text()=\'6\']')
+    DAY_LOCATION = (By.XPATH, '//body[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form['
+                              '1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/table[1]/tbody['
+                              '1]/tr[5]/td[6]/div[1]/span[1]')
 
 
 class HotelLocators(object):

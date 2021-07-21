@@ -22,13 +22,18 @@ class MaxPriceElement(BasePageElement):
 class MainPage(BasePage):
     min_price = MinPriceElement()
     max_price = MaxPriceElement()
+    day = ''
+    month = ''
 
     def fill_calendar(self):
         self.driver.find_element(*MainPageLocators.CALENDAR_INPUT).click()
         calendar_box = self.driver.find_element(*CalendarLocators.CALENDAR_BOX)
-        calendar_box.find_element(*CalendarLocators.ARROW_CALENDAR).click()
-        month_part = calendar_box.find_element(*CalendarLocators.MONTH)
-        month_part.find_element(*CalendarLocators.DAY_LOCATION).click()
+        while self.month not in self.driver.find_element(By.CSS_SELECTOR, '.month1 .month-name').text:
+            calendar_box.find_element(*CalendarLocators.ARROW_CALENDAR).click()
+
+        for day in calendar_box.find_elements(By.CSS_SELECTOR, '.flight-date'):
+            if day.text == self.day:
+                day.click()
 
     def fill_duration(self):
         self.driver.find_element(*MainPageLocators.DURATION_INPUT).click()

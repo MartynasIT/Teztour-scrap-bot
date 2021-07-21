@@ -14,19 +14,26 @@ class HotelGetter:
         self.options = ChromeOptions()
         self.options.add_argument("--start-maximized")
         self.driver = webdriver.Chrome(self.working_dir / 'chromedriver.exe', options=self.options)
+        self.driver.implicitly_wait(6)
         self.driver.get('https://www.teztour.lt/')
         self.xls_data = self.read_csv()
         self.hotel_dict = {'Name': [], 'Price': [], 'Info': [], 'Updated': []}
         self.discount_df = pd.DataFrame
+        self.DAY = '28'
+        self.MONTH = 'Rugpjūtis 2021'
+        self.MIN_PRICE = '900'
+        self.MAX_PRICE = '1650'
 
     def gather_hotels(self):
         time.sleep(2)
         main_page = page.MainPage(self.driver)
+        main_page.day = self.DAY
+        main_page.month = self.MONTH
         main_page.fill_calendar()
         main_page.open_more_options()
         main_page.fill_duration()
-        main_page.min_price = '900'
-        main_page.max_price = '1650'
+        main_page.min_price = self.MIN_PRICE
+        main_page.max_price = self.MAX_PRICE
         main_page.select_stars()
         main_page.click_search()
 
@@ -46,7 +53,7 @@ class HotelGetter:
     def read_csv(self):
         data = None
         try:
-            data = pd.read_excel(self.working_dir / 'hotels.xlsx')
+            data = pd.read_excel(self.working_dir / 'hotels_2021-07-19.xlsx')
             print('file red')
         except Exception as e:
             print('error due to' + str(e))
